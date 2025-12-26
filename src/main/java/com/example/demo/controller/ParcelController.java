@@ -1,27 +1,21 @@
-package com.example.demo.controller;
-
-import com.example.demo.model.Parcel;
-import com.example.demo.service.ParcelService;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/parcels")
 public class ParcelController {
 
-    private final ParcelService parcelService;
+    private final ParcelService service;
 
-    public ParcelController(ParcelService parcelService) {
-        this.parcelService = parcelService;
+    public ParcelController(ParcelService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public Parcel addParcel(@Valid @RequestBody Parcel parcel) {
-        return parcelService.addParcel(parcel);
+    public Parcel add(@RequestBody Parcel parcel) {
+        return service.addParcel(parcel);
     }
 
-    @GetMapping("/{trackingNumber}")
-    public Parcel getParcel(@PathVariable String trackingNumber) {
-        return parcelService.getByTrackingNumber(trackingNumber);
+    @GetMapping("/tracking/{trackingNumber}")
+    public Parcel get(@PathVariable String trackingNumber) {
+        return service.getByTrackingNumber(trackingNumber);
     }
 }
+
