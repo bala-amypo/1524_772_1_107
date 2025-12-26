@@ -23,7 +23,6 @@ public class User {
         this.role = role; 
     } 
  
-    // ===== Getters & Setters ===== 
  
     public Long getId() { 
         return id; 
@@ -53,7 +52,6 @@ public class User {
         return role; 
     } 
  
-    //    ADD THIS 
     public void setRole(String role) { 
         this.role = role; 
     } 

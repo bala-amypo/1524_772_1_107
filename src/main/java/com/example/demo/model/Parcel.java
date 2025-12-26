@@ -19,15 +19,13 @@ public class Parcel {
  
     public Parcel() {} 
  
-    public Parcel(String trackingNumber, String senderName, String 
-receiverName, double weightKg) { 
+    public Parcel(String trackingNumber, String senderName, String receiverName, double weightKg) { 
         this.trackingNumber = trackingNumber; 
         this.senderName = senderName; 
         this.receiverName = receiverName; 
         this.weightKg = weightKg; 
     } 
  
-    // ===== Getters & Setters ===== 
  
     public Long getId() { 
         return id; 
