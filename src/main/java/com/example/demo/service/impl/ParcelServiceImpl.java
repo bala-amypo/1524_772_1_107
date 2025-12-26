@@ -5,9 +5,7 @@ import com.example.demo.repository.ParcelRepository;
 import com.example.demo.service.ParcelService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Service  
+@Service
 public class ParcelServiceImpl implements ParcelService {
 
     private final ParcelRepository parcelRepository;
@@ -17,18 +15,14 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public Parcel createParcel(Parcel parcel) {
+    public Parcel addParcel(Parcel parcel) {
         return parcelRepository.save(parcel);
     }
 
     @Override
-    public Parcel getParcelById(Long id) {
-        return parcelRepository.findById(id)
+    public Parcel getByTrackingNumber(String trackingNumber) {
+        return parcelRepository.findByTrackingNumber(trackingNumber)
                 .orElseThrow(() -> new RuntimeException("Parcel not found"));
     }
-
-    @Override
-    public List<Parcel> getAllParcels() {
-        return parcelRepository.findAll();
-    }
 }
+
