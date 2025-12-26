@@ -1,3 +1,5 @@
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/parcels")
 public class ParcelController {
