@@ -1,36 +1,28 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-
-import java.time.LocalDateTime;
 
 @Entity
-@Table(
-    name = "parcels",
-    uniqueConstraints = @UniqueConstraint(columnNames = "tracking_number")
-)
+@Table(name = "parcels", uniqueConstraints = @UniqueConstraint(columnNames = "trackingNumber"))
 public class Parcel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tracking_number", nullable = false, unique = true)
-    @NotBlank
     private String trackingNumber;
-
-    @NotBlank
     private String senderName;
-
-    @NotBlank
     private String receiverName;
-
-    @Positive(message = "Weight must be greater than 0")
     private Double weightKg;
 
-    private LocalDateTime deliveredAt;
+    public Parcel() {}
+
+    public Parcel(String trackingNumber, String senderName, String receiverName, Double weightKg) {
+        this.trackingNumber = trackingNumber;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.weightKg = weightKg;
+    }
 
     public Long getId() {
         return id;
@@ -70,27 +62,6 @@ public class Parcel {
 
     public void setWeightKg(Double weightKg) {
         this.weightKg = weightKg;
-    }
-
-    public LocalDateTime getDeliveredAt() {
-        return deliveredAt;
-    }
-
-    public void setDeliveredAt(LocalDateTime deliveredAt) {
-        this.deliveredAt = deliveredAt;
-    }
-
-    public Parcel() {
-    }
-
-    public Parcel(Long id, @NotBlank String trackingNumber, @NotBlank String senderName, @NotBlank String receiverName,
-            @Positive(message = "Weight must be greater than 0") Double weightKg, LocalDateTime deliveredAt) {
-        this.id = id;
-        this.trackingNumber = trackingNumber;
-        this.senderName = senderName;
-        this.receiverName = receiverName;
-        this.weightKg = weightKg;
-        this.deliveredAt = deliveredAt;
     }
 
     
