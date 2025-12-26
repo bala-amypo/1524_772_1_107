@@ -8,8 +8,7 @@ import java.util.Date;
 @Component 
 public class JwtUtil { 
  
-    private final String SECRET = "mysecretkey12345"; // change to env var in 
-prod 
+    private final String SECRET = "mysecretkey12345"; // change to env var in prod 
     private final long EXPIRATION = 1000 * 60 * 60;   // 1 hour 
  
     public String generateToken(Long userId, String email, String role) { 
