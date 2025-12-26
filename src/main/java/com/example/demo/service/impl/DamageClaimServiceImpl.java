@@ -8,16 +8,23 @@ import com.example.demo.service.DamageClaimService;
 import org.springframework.stereotype.Service;
 
 @Service
+@Service
 public class DamageClaimServiceImpl implements DamageClaimService {
 
-    private final DamageClaimRepository claimRepository;
+    private final DamageClaimRepository damageClaimRepository;
     private final ParcelRepository parcelRepository;
+    private final ClaimRuleRepository claimRuleRepository;
 
-    public DamageClaimServiceImpl(DamageClaimRepository claimRepository,
-                                  ParcelRepository parcelRepository) {
-        this.claimRepository = claimRepository;
+    public DamageClaimServiceImpl(
+            DamageClaimRepository damageClaimRepository,
+            ParcelRepository parcelRepository,
+            ClaimRuleRepository claimRuleRepository) {
+
+        this.damageClaimRepository = damageClaimRepository;
         this.parcelRepository = parcelRepository;
+        this.claimRuleRepository = claimRuleRepository;
     }
+
 
     @Override
     public DamageClaim fileClaim(Long parcelId, DamageClaim claim) {
