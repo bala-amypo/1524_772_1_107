@@ -4,10 +4,14 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Component   // 🔥 THIS IS REQUIRED
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
@@ -18,7 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getServletPath();
 
-        // 🚀 Skip JWT validation for public endpoints
+        // Skip public endpoints
         if (path.startsWith("/auth/")
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/swagger-ui")
@@ -30,11 +34,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // ✅ better than 403
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // ✅ 401
             return;
         }
 
-        // continue with token validation...
+        // TODO: validate token and set authentication
         filterChain.doFilter(request, response);
     }
 }
