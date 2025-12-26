@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,15 +11,20 @@ public class Evidence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private DamageClaim claim;
 
-    private String evidenceType; 
-
+    private String evidenceType;
     private String fileUrl;
 
     private LocalDateTime uploadedAt;
 
+    @PrePersist
+    void onCreate() {
+        uploadedAt = LocalDateTime.now();
+    }
+
+    public Evidence() {}
 
     public Long getId() {
         return id;
@@ -59,17 +63,6 @@ public class Evidence {
     }
 
     public void setUploadedAt(LocalDateTime uploadedAt) {
-        this.uploadedAt = uploadedAt;
-    }
-
-    public Evidence() {
-    }
-
-    public Evidence(Long id, DamageClaim claim, String evidenceType, String fileUrl, LocalDateTime uploadedAt) {
-        this.id = id;
-        this.claim = claim;
-        this.evidenceType = evidenceType;
-        this.fileUrl = fileUrl;
         this.uploadedAt = uploadedAt;
     }
 

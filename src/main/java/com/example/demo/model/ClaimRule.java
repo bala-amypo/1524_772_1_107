@@ -3,7 +3,7 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "claim_rule")
+@Table(name = "claim_rules")
 public class ClaimRule {
 
     @Id
@@ -11,10 +11,16 @@ public class ClaimRule {
     private Long id;
 
     private String ruleName;
-
     private String conditionExpression;
-
     private Double weight;
+
+    public ClaimRule() {}
+
+    public ClaimRule(String ruleName, String conditionExpression, Double weight) {
+        this.ruleName = ruleName;
+        this.conditionExpression = conditionExpression;
+        this.weight = weight;
+    }
 
     public Long getId() {
         return id;
@@ -45,16 +51,6 @@ public class ClaimRule {
     }
 
     public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public ClaimRule() {
-    }
-
-    public ClaimRule(Long id, String ruleName, String conditionExpression, Double weight) {
-        this.id = id;
-        this.ruleName = ruleName;
-        this.conditionExpression = conditionExpression;
         this.weight = weight;
     }
 

@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -13,30 +12,26 @@ public class DamageClaim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Parcel parcel;
 
     private String claimDescription;
 
     private LocalDateTime filedAt;
 
-    private String status; 
+    private String status = "PENDING";
 
     private Double score;
 
     @ManyToMany
-    @JoinTable(
-        name = "claim_applied_rules",
-        joinColumns = @JoinColumn(name = "claim_id"),
-        inverseJoinColumns = @JoinColumn(name = "rule_id")
-    )
     private Set<ClaimRule> appliedRules;
 
     @PrePersist
-    public void onCreate() {
-        this.filedAt = LocalDateTime.now();
-        this.status = "PENDING";
+    void onCreate() {
+        filedAt = LocalDateTime.now();
     }
+
+    public DamageClaim() {}
 
     public Long getId() {
         return id;
@@ -94,19 +89,4 @@ public class DamageClaim {
         this.appliedRules = appliedRules;
     }
 
-    public DamageClaim() {
-    }
-
-    public DamageClaim(Long id, Parcel parcel, String claimDescription, LocalDateTime filedAt, String status,
-            Double score, Set<ClaimRule> appliedRules) {
-        this.id = id;
-        this.parcel = parcel;
-        this.claimDescription = claimDescription;
-        this.filedAt = filedAt;
-        this.status = status;
-        this.score = score;
-        this.appliedRules = appliedRules;
-    }
-    
-    
 }
