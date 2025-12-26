@@ -1,9 +1,7 @@
 package com.example.demo.security; 
  
 import com.example.demo.service.CustomUserDetailsService; 
-import 
-org.springframework.security.authentication.UsernamePasswordAuthentication
-Token; 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken; 
 import org.springframework.security.core.context.SecurityContextHolder; 
 import org.springframework.security.core.userdetails.UserDetails; 
 import org.springframework.stereotype.Component; 
@@ -21,8 +19,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil; 
     private final CustomUserDetailsService userDetailsService; 
  
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, CustomUserDetailsService 
-userDetailsService) { 
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) { 
         this.jwtUtil = jwtUtil; 
         this.userDetailsService = userDetailsService; 
     } 
@@ -30,8 +27,7 @@ userDetailsService) {
     @Override 
     protected void doFilterInternal(HttpServletRequest request, 
                                     HttpServletResponse response, 
-                                    FilterChain filterChain) throws ServletException, 
-IOException { 
+                                    FilterChain filterChain) throws ServletException, IOException { 
  
         final String authHeader = request.getHeader("Authorization"); 
         String email = null; 
@@ -40,16 +36,13 @@ IOException {
         if (authHeader != null && authHeader.startsWith("Bearer ")) { 
             token = authHeader.substring(7); 
  
-            // Validate token using JwtUtil 
             if (jwtUtil.validateToken(token)) { 
                 email = jwtUtil.extractEmail(token); 
             } 
         } 
  
-        if (email != null && 
-SecurityContextHolder.getContext().getAuthentication() == null) { 
-            UserDetails userDetails = 
-userDetailsService.loadUserByUsername(email); 
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) { 
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email); 
  
             UsernamePasswordAuthenticationToken authToken = 
                     new UsernamePasswordAuthenticationToken( 
