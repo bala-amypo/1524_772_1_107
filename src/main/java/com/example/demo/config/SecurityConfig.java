@@ -23,29 +23,50 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
+            // ❌ Disable CSRF for REST APIs
             .csrf(csrf -> csrf.disable())
+
+            // ❌ No session (JWT based)
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+            // ✅ Authorization rules
             .authorizeHttpRequests(auth -> auth
+
+                // 🔓 Public authentication endpoints
                 .requestMatchers("/auth/**").permitAll()
+
+                // 🔓 User registration (IMPORTANT)
+                .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+
+                // 🔓 Public GET APIs
                 .requestMatchers(HttpMethod.GET, "/parcel/**").permitAll()
+
+                // 🔓 Swagger / OpenAPI
                 .requestMatchers(
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
                     "/swagger-ui.html"
                 ).permitAll()
+
+                // 🔒 Everything else needs JWT
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(jwtAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class);
+
+            // 🔐 JWT filter
+            .addFilterBefore(
+                jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+            );
 
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }
