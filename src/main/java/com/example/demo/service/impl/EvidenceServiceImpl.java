@@ -15,7 +15,6 @@ public class EvidenceServiceImpl implements EvidenceService {
     private final EvidenceRepository evidenceRepository; 
     private final DamageClaimRepository damageClaimRepository; 
  
-    //    REQUIRED BY TEST 
     public EvidenceServiceImpl(EvidenceRepository evidenceRepository, 
                                DamageClaimRepository damageClaimRepository) { 
         this.evidenceRepository = evidenceRepository; 
@@ -38,17 +37,15 @@ public Evidence getById(Long id) {
         return evidenceRepository.findAll(); 
     } 
  
-    //    REQUIRED BY TEST 
+   
    @Override 
 public Evidence uploadEvidence(Long claimId, Evidence evidence) { 
 DamageClaim claim = damageClaimRepository.findById(claimId) 
-.orElseThrow(() -> new RuntimeException("DamageClaim not 
-found")); 
+.orElseThrow(() -> new RuntimeException("DamageClaim not found")); 
 evidence.setClaim(claim); 
 return evidenceRepository.save(evidence); 
 } 
-//    
-REQUIRED BY TEST 
+
 @Override 
 public List<Evidence> getEvidenceForClaim(Long claimId) { 
 return evidenceRepository.findByClaim_Id(claimId); //    

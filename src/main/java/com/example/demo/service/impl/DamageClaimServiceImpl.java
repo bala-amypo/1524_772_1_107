@@ -19,7 +19,6 @@ public class DamageClaimServiceImpl implements DamageClaimService {
     private final DamageClaimRepository damageClaimRepository; 
     private final ClaimRuleRepository claimRuleRepository; 
  
-    //    EXACT constructor expected by test 
     public DamageClaimServiceImpl( 
             ParcelRepository parcelRepository, 
             DamageClaimRepository damageClaimRepository, 
@@ -71,24 +70,21 @@ public DamageClaim evaluateClaim(Long claimId) {
     double score = RuleEngineUtil.computeScore(claim.getClaimDescription(), 
 rules); 
  
-    // Set applied rules 
     if (rules != null && !rules.isEmpty()) { 
         claim.getAppliedRules().addAll(rules); 
     } 
  
-    //    Approval logic 
     if (score > 0) { 
         claim.setStatus("APPROVED"); 
         claim.setScore(score); 
     } else { 
         claim.setStatus("REJECTED"); 
-        claim.setScore(0.0);  // ensure REJECTED score is exactly 0.0 
+        claim.setScore(0.0);  
     } 
  
     return damageClaimRepository.save(claim); 
 } 
  
-    //    REQUIRED BY TEST 
     @Override 
     public DamageClaim getClaim(Long claimId) { 
         return damageClaimRepository.findById(claimId) 

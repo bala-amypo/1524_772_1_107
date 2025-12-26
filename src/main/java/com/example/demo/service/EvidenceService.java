@@ -11,9 +11,7 @@ public interface EvidenceService {
  
     List<Evidence> getAllEvidence(); 
  
-    //    REQUIRED BY TEST 
     Evidence uploadEvidence(Long claimId, Evidence evidence); 
  
-    //    REQUIRED BY TEST 
     List<Evidence> getEvidenceForClaim(Long claimId); 
 }

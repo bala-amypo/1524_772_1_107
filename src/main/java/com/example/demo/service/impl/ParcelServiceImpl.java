@@ -16,8 +16,7 @@ public class ParcelServiceImpl implements ParcelService {
     @Override 
     public Parcel addParcel(Parcel parcel) { 
         if (parcelRepo.existsByTrackingNumber(parcel.getTrackingNumber())) { 
-            throw new RuntimeException("Parcel with this tracking number already 
-exists"); 
+            throw new RuntimeException("Parcel with this tracking number already exists"); 
         } 
         return parcelRepo.save(parcel); 
     } 
