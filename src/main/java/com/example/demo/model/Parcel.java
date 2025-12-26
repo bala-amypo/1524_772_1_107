@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -14,6 +15,14 @@ public class Parcel {
     private String senderName;
     private String receiverName;
     private Double weightKg;
+    private LocalDateTime deliveredAt;
+
+public LocalDateTime getDeliveredAt() {
+    return deliveredAt;
+}
+public void setDeliveredAt(LocalDateTime deliveredAt) {
+    this.deliveredAt = deliveredAt;
+}
 
     public Parcel() {}
 
