@@ -6,7 +6,6 @@ DamageClaim getByClaimNumber(String claimNumber);
 DamageClaim updateStatus(String claimNumber, String status); 
 DamageClaim fileClaim(Long parcelId, DamageClaim claim); 
 DamageClaim evaluateClaim(Long claimId); 
-//    
-REQUIRED BY TEST 
+ 
 DamageClaim getClaim(Long claimId); 
 }
