@@ -60,9 +60,4 @@ public class AuthController {
 
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
-    @GetMapping("/{email}") 
-    public User getByEmail(@PathVariable String email) { 
-        return service.findByEmail(email); 
-    } 
 }
