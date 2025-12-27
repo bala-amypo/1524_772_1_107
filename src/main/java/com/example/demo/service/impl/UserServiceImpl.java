@@ -1,13 +1,20 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.User;
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
+import com.example.demo.model.User;
+import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private final JwtUtil jwtUtil;
+
+    public UserServiceImpl(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public User register(User user) {
@@ -15,16 +22,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-public AuthResponse login(AuthRequest request) {
+    public AuthResponse login(AuthRequest request) {
 
-    String dummyToken = "jwt-token-example";
+        // 🔹 Normally validate email & password from DB here
+        Long userId = 1L;
+        String email = request.getEmail();
+        String role = "USER";
 
-    Long id = 1L;
-    String email = request.getEmail();
-    String role = "USER";
+        // ✅ Generate REAL JWT token
+        String token = jwtUtil.generateToken(email, role);
 
-    return new AuthResponse(dummyToken, id, email, role);
-}
-
+        return new AuthResponse(token, userId, email, role);
+    }
 }
 
