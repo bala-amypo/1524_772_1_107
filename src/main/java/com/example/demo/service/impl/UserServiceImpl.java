@@ -24,12 +24,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthResponse login(AuthRequest request) {
 
-        // 🔹 Normally validate email & password from DB here
         Long userId = 1L;
         String email = request.getEmail();
-        String role = "USER";
-
-        // ✅ Generate REAL JWT token
+        String role = "AGENT";
+        
         String token = jwtUtil.generateToken(email, role);
 
         return new AuthResponse(token, userId, email, role);
