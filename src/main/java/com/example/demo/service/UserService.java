@@ -8,5 +8,5 @@ public interface UserService {
 
     User register(User user);
 
-    LoginResponse login(LoginRequest request);
+    AuthResponse login(AuthRequest request);
 }
