@@ -15,13 +15,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthResponse login(AuthRequest request) {
+public AuthResponse login(AuthRequest request) {
 
-        
+    String dummyToken = "jwt-token-example";
 
-        String token = "jwt-token-example";
+    Long id = 1L;
+    String email = request.getEmail();
+    String role = "USER";
 
-        return new AuthResponse(token);
-    }
+    return new AuthResponse(dummyToken, id, email, role);
+}
+
 }
 
