@@ -20,18 +20,23 @@ public class SecurityConfig {
     } 
  
     @Bean 
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws 
+Exception { 
         http 
             .csrf(csrf -> csrf.disable()) 
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
-            .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/auth/**").permitAll()
-    .requestMatchers("/users/register").permitAll()  // ADD THIS
-    .requestMatchers(HttpMethod.GET, "/parcel/**").permitAll()
-    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-ui/index.html").permitAll()
-    .anyRequest().authenticated()
-)
-
+            .sessionManagement(session -> 
+session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
+            .authorizeHttpRequests(auth -> auth 
+                .requestMatchers("/auth/**").permitAll() 
+                .requestMatchers(HttpMethod.GET, "/parcel/**").permitAll() 
+                .requestMatchers( 
+                    "/v3/api-docs/**", 
+                    "/swagger-ui/**", 
+                    "/swagger-ui.html", 
+                    "/swagger-ui/index.html" 
+                ).permitAll() 
+                .anyRequest().authenticated() 
+            ) 
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); 
  
         return http.build(); 
