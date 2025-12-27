@@ -7,6 +7,6 @@ import com.example.demo.dto.AuthResponse;
 public interface UserService {
 
     User register(User user);
-
+    
     AuthResponse login(AuthRequest request);
 }
