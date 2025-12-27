@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService {
 
         
 
-        String dummyToken = "jwt-token-example";
+        String token = "jwt-token-example";
 
-        return new AuthResponse(dummyToken);
+        return new AuthResponse(token);
     }
 }
 
