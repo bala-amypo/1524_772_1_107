@@ -35,15 +35,13 @@ public class SecurityConfig {
                 ).permitAll() 
                 .anyRequest().authenticated() 
             ) 
-            .addFilterBefore(jwtAuthenticationFilter, 
-UsernamePasswordAuthenticationFilter.class); 
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); 
  
         return http.build(); 
     } 
  
     @Bean 
-    public AuthenticationManager 
-authenticationManager(AuthenticationConfiguration config) throws Exception 
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception 
 { 
         return config.getAuthenticationManager(); 
     } 
