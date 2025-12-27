@@ -1,6 +1,6 @@
 package com.example.demo.security; 
  
-import com.example.demo.service.CustomUserDetailsService; 
+import com.example.demo.security.CustomUserDetailsService; 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken; 
 import org.springframework.security.core.context.SecurityContextHolder; 
 import org.springframework.security.core.userdetails.UserDetails; 
