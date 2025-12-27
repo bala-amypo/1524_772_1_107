@@ -31,13 +31,11 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    /* ---------- REGISTER ---------- */
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return userService.register(user);
     }
 
-    /* ---------- LOGIN ---------- */
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(
             @RequestBody LoginRequest request) {
