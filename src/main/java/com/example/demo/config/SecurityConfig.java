@@ -19,29 +19,38 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter; 
     } 
  
-    @Bean 
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws 
-Exception { 
-        http 
-            .csrf(csrf -> csrf.disable()) 
-            .sessionManagement(session -> 
-session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
-            .authorizeHttpRequests(auth -> auth 
-                .requestMatchers("/auth/**").permitAll() 
-                .requestMatchers(HttpMethod.GET, "/parcel/**").permitAll() 
-                .requestMatchers( 
-                    "/v3/api-docs/**", 
-                    "/swagger-ui/**", 
-                    "/swagger-ui.html", 
-                    "/swagger-ui/index.html" 
-                ).permitAll() 
-                .anyRequest().authenticated() 
-            ) 
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); 
- 
-        return http.build(); 
-    } 
- 
+    @Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(session ->
+            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
+        .authorizeHttpRequests(auth -> auth
+            // ✅ PUBLIC ENDPOINTS
+            .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+            .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
+
+            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/parcel/**").permitAll()
+
+            // ✅ Swagger
+            .requestMatchers(
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/swagger-ui/index.html"
+            ).permitAll()
+
+            // 🔐 Everything else requires JWT
+            .anyRequest().authenticated()
+        )
+        .addFilterBefore(jwtAuthenticationFilter,
+            UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+}
+
     @Bean 
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception 
 { 
