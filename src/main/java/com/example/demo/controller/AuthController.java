@@ -25,6 +25,7 @@ public class AuthController {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
  
