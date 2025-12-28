@@ -1,44 +1,34 @@
-package com.example.demo.security; 
- 
-import io.jsonwebtoken.*; 
-import org.springframework.stereotype.Component; 
- 
-import java.util.Date; 
- 
-@Component 
-public class JwtUtil { 
- 
-    private final String SECRET = "mysecretkey12345"; 
-    private final long EXPIRATION = 1000 * 60 * 60;    
- 
-    public String generateToken(Long userId, String email, String role) { 
-        return Jwts.builder() 
-                .claim("id", userId) 
-                .claim("email", email) 
-                .claim("role", role) 
-                .setIssuedAt(new Date()) 
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION)) 
-                .signWith(SignatureAlgorithm.HS256, SECRET) 
-                .compact(); 
-    } 
- 
-    public Claims extractAllClaims(String token) { 
-        return Jwts.parser() 
-                .setSigningKey(SECRET) 
-                .parseClaimsJws(token) 
-                .getBody(); 
-    } 
- 
-    public String extractEmail(String token) { 
-        return extractAllClaims(token).get("email", String.class); 
-    } 
- 
-    public boolean validateToken(String token) { 
-        try { 
-            extractAllClaims(token); 
-            return true; 
-        } catch (JwtException | IllegalArgumentException e) { 
-            return false; 
-        } 
-    } 
+package com.example.demo.security;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
+
+import java.security.Key;
+import java.util.Date;
+
+@Component
+public class JwtUtil {
+
+    private static final String SECRET =
+            "my-super-secure-jwt-secret-key-256-bit";
+
+    private static final long EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 1 day
+
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET.getBytes());
+    }
+
+    public String generateToken(Long userId, String email, String role) {
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("userId", userId)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 }
