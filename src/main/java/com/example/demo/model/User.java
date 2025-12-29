@@ -35,7 +35,6 @@ public class User {
         return name;
     }
 
-    // (optional but good practice)
     public void setName(String name) {
         this.name = name;
     }
@@ -52,7 +51,6 @@ public class User {
         return password;
     }
 
-    // ✅ THIS FIXES THE ERROR
     public void setPassword(String password) {
         this.password = password;
     }

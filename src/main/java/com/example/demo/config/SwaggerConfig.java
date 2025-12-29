@@ -22,13 +22,10 @@ public class SwaggerConfig {
                         .title("Parcel Damage Claim Validator")
                         .version("1.0")
                         .description("API for managing medications and checking interactions."))
-                // 1. Keep your custom server URL
                 .servers(List.of(
                         new Server().url("https://9523.pro604cr.amypo.ai/")
                 ))
-                // 2. This adds the Lock Icon / Authorize button to Swagger
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                // 3. This tells Swagger that we use JWT Bearer Tokens
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()

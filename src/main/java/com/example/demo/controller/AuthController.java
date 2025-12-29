@@ -31,7 +31,6 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // REGISTER
     @PostMapping("/register")
     public User register(@RequestBody User user) {
 
@@ -39,13 +38,11 @@ public class AuthController {
             throw new RuntimeException("User with this email already exists");
         }
 
-        // ✅ ENCODE PASSWORD
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
     }
 
-    // LOGIN
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
 

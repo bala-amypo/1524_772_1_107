@@ -23,20 +23,17 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                // ✅ PUBLIC ENDPOINTS
                 .requestMatchers(HttpMethod.POST,
                         "/users/register",
                         "/users/login"
                 ).permitAll()
 
-                // ✅ SWAGGER
                 .requestMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html"
                 ).permitAll()
 
-                // 🔐 EVERYTHING ELSE
                 .anyRequest().authenticated()
             );
 
